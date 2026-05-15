@@ -1,0 +1,367 @@
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--font-sans);background:var(--color-background-primary);color:var(--color-text-primary)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+.hero{background:#0d1b2a;color:#f0ead8;padding:28px 24px 22px;border-radius:var(--border-radius-lg);margin-bottom:18px}
+.hbadge{display:inline-block;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:#d4a83a;border:0.5px solid #b8902a;padding:3px 12px;border-radius:20px;margin-bottom:12px}
+.hero h1{font-size:22px;font-weight:500;line-height:1.2;color:#f0ead8;margin-bottom:5px}
+.hero h1 span{color:#d4a83a}
+.hsub{font-size:12px;color:#6b7a8d;letter-spacing:1px;text-transform:uppercase;margin-bottom:16px}
+.hstats{display:flex;gap:18px;flex-wrap:wrap}
+.hstat{font-size:12px;color:#6b7a8d}.hstat b{color:#d4a83a}
+.gbar{height:1px;background:linear-gradient(to right,transparent,#b8902a,transparent);opacity:.3;margin:14px 0}
+.slbl{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#b8902a;margin-bottom:4px;font-family:var(--font-mono)}
+.shed{font-size:18px;font-weight:500;margin-bottom:14px;color:var(--color-text-primary)}
+.sigs{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-bottom:14px}
+.sig{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:13px;text-align:center;border-top:3px solid #b8902a}
+.sig .big{font-size:28px;font-weight:500;color:#b8902a;display:block;line-height:1}
+.sig .lab{font-size:12px;color:var(--color-text-secondary);margin-top:4px;line-height:1.4}
+.sig .ref{font-size:10px;color:var(--color-text-tertiary);margin-top:4px;font-family:var(--font-mono)}
+.ctx{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-left:3px solid #b8902a;border-radius:0 var(--border-radius-md) var(--border-radius-md) 0;padding:14px 16px;margin-bottom:10px;font-size:13px;line-height:1.7;color:var(--color-text-primary)}
+.ctx b{font-weight:500}
+.livcards{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:10px;margin-bottom:10px}
+.livcard{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:14px}
+.livnum{width:30px;height:30px;border-radius:50%;background:#0d1b2a;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:500;color:#d4a83a;margin-bottom:9px}
+.livcard h3{font-size:13px;font-weight:500;margin-bottom:4px;color:var(--color-text-primary)}
+.livcard p{font-size:12px;color:var(--color-text-secondary);line-height:1.5}
+.chrono{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:14px 16px;margin-bottom:10px}
+.ctitle{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#b8902a;margin-bottom:12px;font-family:var(--font-mono)}
+.crow{display:flex;gap:10px;margin-bottom:7px;align-items:flex-start;font-size:13px}
+.ctime{font-family:var(--font-mono);font-size:10px;color:#b8902a;background:rgba(184,144,42,.1);padding:3px 7px;border-radius:4px;white-space:nowrap;min-width:60px;text-align:center;margin-top:2px}
+.ctime.al{background:rgba(192,57,43,.1);color:#c04040}
+.ctxt{color:var(--color-text-primary);line-height:1.55}.ctxt b{font-weight:500}
+.ctxt em{color:var(--color-text-secondary);font-style:normal}
+.cwarn{background:rgba(192,57,43,.06);border:0.5px solid rgba(192,57,43,.2);border-radius:var(--border-radius-md);padding:10px 13px;font-size:12px;color:#c04040;margin-top:10px;line-height:1.55}
+.accords{display:flex;flex-direction:column;gap:8px;margin-bottom:10px}
+.acc{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);overflow:hidden}
+.achdr{display:flex;align-items:center;gap:10px;padding:12px 14px;cursor:pointer;background:var(--color-background-secondary);transition:background .15s}
+.achdr:hover{background:var(--color-background-primary)}
+.anum{font-family:var(--font-mono);font-size:10px;color:#b8902a;background:rgba(184,144,42,.1);padding:3px 8px;border-radius:4px}
+.atit{font-size:13px;font-weight:500;flex:1;color:var(--color-text-primary)}
+.adur{font-size:12px;color:var(--color-text-secondary)}
+.aarr{font-size:16px;color:#b8902a;transition:transform .2s;line-height:1}
+.acc.open .aarr{transform:rotate(90deg)}
+.abody{display:none;padding:0 14px 14px;border-top:0.5px solid var(--color-border-tertiary);background:var(--color-background-primary)}
+.acc.open .abody{display:block}
+.abody ul{list-style:none;padding:0;margin-top:12px}
+.abody li{font-size:13px;color:var(--color-text-primary);padding:5px 0 5px 16px;border-bottom:0.5px solid var(--color-border-tertiary);line-height:1.55;position:relative}
+.abody li::before{content:'›';position:absolute;left:0;color:#b8902a;font-size:14px;line-height:1.2}
+.abody li b{font-weight:500}
+.abody li em{color:var(--color-text-secondary);font-style:normal}
+.tip{background:rgba(184,144,42,.06);border-left:2px solid #b8902a;padding:9px 12px;margin-top:10px;font-size:12px;color:var(--color-text-secondary);line-height:1.6;border-radius:0 var(--border-radius-md) var(--border-radius-md) 0}
+.dqs{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin-top:10px}
+.dq{background:rgba(184,144,42,.05);border:0.5px solid rgba(184,144,42,.2);border-radius:var(--border-radius-md);padding:12px;font-size:12px;color:var(--color-text-secondary);line-height:1.55;font-style:italic}
+.dq::before{content:'?';display:block;font-size:16px;font-weight:500;color:#b8902a;margin-bottom:5px;font-style:normal}
+.rgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px;margin-bottom:10px}
+.rcard{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:13px;border-left:3px solid #b8902a}
+.rsrc{font-family:var(--font-mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#b8902a;margin-bottom:5px}
+.rcard h4{font-size:13px;font-weight:500;margin-bottom:4px;color:var(--color-text-primary)}
+.rcard p{font-size:12px;color:var(--color-text-secondary);line-height:1.5}
+.rcard a{display:inline-block;margin-top:5px;font-size:10px;color:#b8902a;text-decoration:none;font-family:var(--font-mono)}
+.czone{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:22px;margin-bottom:10px;text-align:center}
+.rolecard{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);text-align:left;overflow:hidden;max-width:540px;margin:0 auto;animation:fs .3s ease}
+@keyframes fs{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.rcbar{height:4px}
+.rchdr{padding:16px 20px 12px;border-bottom:0.5px solid var(--color-border-tertiary)}
+.rcbadge{display:inline-block;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;padding:3px 10px;border-radius:20px;margin-bottom:7px}
+.rcnom{font-size:18px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px}
+.rctit{font-size:12px;color:var(--color-text-secondary);margin-bottom:7px}
+.rcmeta{display:flex;gap:7px;flex-wrap:wrap}
+.rcchip{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:4px;font-size:11px;color:var(--color-text-secondary);padding:3px 8px;font-family:var(--font-mono)}
+.rcchip span{color:var(--color-text-primary);font-weight:500}
+.rcbody{padding:14px 20px 16px}
+.rclbl{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#b8902a;margin-top:12px;margin-bottom:4px;font-family:var(--font-mono)}
+.rclbl:first-child{margin-top:0}
+.rcbody p,.rcbody li{font-size:13px;line-height:1.65;color:var(--color-text-primary)}
+.rcbody ul{list-style:none;padding:0}
+.rcbody li{padding:3px 0 3px 13px;position:relative}
+.rcbody li::before{content:'·';position:absolute;left:0;color:#b8902a;font-size:15px;line-height:1.1}
+.tens{background:rgba(192,57,43,.06);border:0.5px solid rgba(192,57,43,.18);border-radius:var(--border-radius-md);padding:10px 13px;margin-top:4px;font-size:12px;color:var(--color-text-secondary);line-height:1.55}
+.cons{background:rgba(184,144,42,.06);border:0.5px solid rgba(184,144,42,.18);border-radius:var(--border-radius-md);padding:11px 13px;margin-top:4px}
+.cons p{font-size:12px;color:var(--color-text-primary);line-height:1.65}
+.ltag{display:inline-block;font-size:10px;background:#0d1b2a;color:#d4a83a;padding:2px 7px;border-radius:4px;margin:3px 2px 0 0;font-family:var(--font-mono)}
+.punch{font-size:12px;color:#b8902a;font-style:italic;margin-top:4px;line-height:1.55}
+.rcfoot{padding:9px 20px;background:var(--color-background-secondary);border-top:0.5px solid var(--color-border-tertiary);font-size:11px;color:var(--color-text-tertiary);text-align:center;font-family:var(--font-mono)}
+.btnrow{display:flex;justify-content:center;gap:10px;margin-top:14px;flex-wrap:wrap}
+.ctrx{font-size:11px;color:var(--color-text-secondary);margin-top:7px;font-family:var(--font-mono)}
+.ph{text-align:center;padding:36px 20px;color:var(--color-text-secondary);font-size:14px}
+.foot{text-align:center;font-size:11px;color:var(--color-text-secondary);padding:14px 0 4px;font-family:var(--font-mono)}
+</style>
+<h2 class="sr">Serious game GPEEC — service déconcentré 5 000 agents — 30 minutes — 6 prénoms</h2>
+
+<div class="hero">
+  <div class="hbadge">Serious Game · Jeu de rôles · Formation RH</div>
+  <h1>Mise en œuvre opérationnelle<br>d'une <span>GPEEC</span></h1>
+  <p class="hsub">Service déconcentré de l'État · Direction régionale · 5 000 agents</p>
+  <div class="hstats">
+    <div class="hstat">Durée totale : <b>30 min de simulation</b></div>
+    <div class="hstat">Joueurs : <b>5 à 6</b></div>
+    <div class="hstat">Livrables : <b>3 documents GPEEC</b></div>
+    <div class="hstat">Réalisé par : <b>Gaëlle Fontana</b></div>
+  </div>
+</div>
+
+<div class="slbl">01 · Mise en situation</div>
+<div class="shed">Contexte opérationnel</div>
+
+<div class="ctx">
+  Vous êtes membres de la <b>Direction des Ressources Humaines d'une direction régionale déconcentrée de l'État</b> (type DREETS, DREAL ou DRFIP) comptant environ <b>5 000 agents</b> répartis sur plusieurs sites. Le Directeur régional a demandé un diagnostic GPEEC urgent à partir des données RH consolidées de l'exercice N.
+</div>
+<div class="ctx">
+  Trois signaux d'alerte ont été identifiés dans le <b>Rapport Social Unique (RSU)</b> — obligation légale issue de l'<b>article 5 de la loi n° 2019-828</b> du 6 août 2019 — et dans les projections DGAFP :
+</div>
+
+<div class="sigs">
+  <div class="sig"><span class="big">11 %</span><div class="lab">Taux de vacance des postes (cible LOLF : ≤ 4 %)</div><div class="ref">RSU chap. 1 · Emploi</div></div>
+  <div class="sig"><span class="big">27 %</span><div class="lab">des agents partent à la retraite d'ici 2026–2029</div><div class="ref">Pyramide des âges · GPRH DGAFP 2024</div></div>
+  <div class="sig"><span class="big">1,8 %</span><div class="lab">Taux de formation / masse salariale (cible : ≥ 3,5 %)</div><div class="ref">RSU chap. 4 · Formations</div></div>
+</div>
+
+<div class="ctx">
+  Le <b>DRH (Marc)</b> dispose de <b>30 minutes</b> pour produire, avec son équipe, les 3 livrables GPEEC. <b>Léa</b> joue le rôle de facilitatrice : elle n'a pas d'avis sur le fond, elle aide le groupe à avancer, gère le chrono et reformule en cas de blocage. La réunion se déroule sans intervention extérieure.
+</div>
+
+<div class="gbar"></div>
+
+<div class="slbl" style="margin-top:14px">02 · Objectif collectif</div>
+<div class="shed">Les 3 livrables à produire en 30 minutes</div>
+
+<div class="livcards">
+  <div class="livcard"><div class="livnum">1</div><h3>Analyse SWOT</h3><p>Forces et Faiblesses internes + Opportunités et Menaces externes. Minimum 2 items par cadrant, chacun appuyé sur une donnée RSU ou chiffrée.</p></div>
+  <div class="livcard"><div class="livnum">2</div><h3>Plan d'action — 3 axes</h3><p>3 axes prioritaires avec : action principale, délai, pilote désigné, et lien LDG / RSU. Chaque axe cite sa base légale CGFP.</p></div>
+  <div class="livcard"><div class="livnum">3</div><h3>Tableau de pilotage</h3><p>5 indicateurs retenus parmi 8 proposés, avec valeur N, cible à 3 ans, statut RAG et action prioritaire associée.</p></div>
+</div>
+
+<div class="gbar"></div>
+
+<div class="slbl" style="margin-top:14px">03 · Minutage</div>
+<div class="shed">Déroulement de la simulation (30 min)</div>
+
+<div class="chrono">
+  <div class="ctitle"><i class="ti ti-clock" aria-hidden="true"></i> Calendrier de la réunion</div>
+  <div class="crow"><div class="ctime">0 – 2 min</div><div class="ctxt"><b>Ouverture par Marc ·</b> Rappel du contexte, des 3 signaux d'alerte et des 3 livrables à produire. Léa annonce les règles du jeu et la gestion du temps.</div></div>
+  <div class="crow"><div class="ctime">2 – 10 min</div><div class="ctxt"><b>SWOT (livrable 1) ·</b> Karim apporte les données. Sylvie et Inès défendent leurs lectures. <em>Objectif : 2 items minimum par cadrant.</em> Léa reformule si le groupe tourne en rond.</div></div>
+  <div class="crow"><div class="ctime">10 – 22 min</div><div class="ctxt"><b>Plan d'action (livrable 2) ·</b> Le groupe négocie les 3 axes. Inès cite 2 références légales. Sylvie cadre la faisabilité. Marc arbitre si blocage à 3 min. <em>Léa chronomètre chaque axe.</em></div></div>
+  <div class="crow"><div class="ctime">22 – 28 min</div><div class="ctxt"><b>Tableau de pilotage (livrable 3) ·</b> Théo propose 8 indicateurs. Le groupe vote pour en retenir 5. Marc valide la cohérence avec le plan.</div></div>
+  <div class="crow"><div class="ctime">28 – 30 min</div><div class="ctxt"><b>Clôture par Léa ·</b> Elle synthétise ce qui a été produit, nomme les tensions observées, et annonce le débriefing.</div></div>
+  <div class="cwarn"><i class="ti ti-alert-triangle" aria-hidden="true"></i> Si le SWOT n'est pas finalisé à 10 min, Léa intervient : "On acte ce qu'on a et on passe au plan." Un SWOT incomplet mais défendable vaut mieux qu'un SWOT parfait sans plan.</div>
+</div>
+
+<div class="gbar"></div>
+
+<div class="slbl" style="margin-top:14px">04 · Consignes détaillées</div>
+<div class="shed">Instructions par étape</div>
+
+<div class="accords">
+
+  <div class="acc open">
+    <div class="achdr" onclick="this.parentElement.classList.toggle('open')">
+      <div class="anum">ÉTAPE 01</div><div class="atit">Tirage & préparation individuelle</div><div class="adur">5 min</div><div class="aarr">›</div>
+    </div>
+    <div class="abody">
+      <ul>
+        <li>Distribuez les cartes une par une. <b>Chaque participant tire son rôle au hasard.</b></li>
+        <li>Lisez votre fiche entièrement : contexte, prise de poste, service, compétences, tension et consigne.</li>
+        <li>Identifiez <em>un chiffre clé</em> à citer dans la simulation et préparez votre <b>punchline d'ouverture</b>.</li>
+        <li>Ne montrez pas votre fiche aux autres participants avant la simulation.</li>
+      </ul>
+      <div class="tip">Conseil formateur · 5 minutes de silence suffisent. Un personnage sans intention ne crée pas de tension pédagogique.</div>
+    </div>
+  </div>
+
+  <div class="acc">
+    <div class="achdr" onclick="this.parentElement.classList.toggle('open')">
+      <div class="anum">ÉTAPE 02</div><div class="atit">SWOT — livrable 1</div><div class="adur">2 – 10 min</div><div class="aarr">›</div>
+    </div>
+    <div class="abody">
+      <ul>
+        <li><b>Marc</b> ouvre la réunion en 90 secondes : contexte + 3 signaux + 3 livrables. Il distribue une feuille divisée en 4 cadrants.</li>
+        <li><b>Karim</b> propose au moins une Force (expertise agents seniors, ancienneté moyenne 14 ans) et une Faiblesse (taux formation 1,8 %, sous seuil DGAFP).</li>
+        <li><b>Sylvie</b> signale que les 1,8 % sont <em>à la fois une Faiblesse interne ET une Menace externe</em> si les budgets 2026 ne sont pas sanctuarisés.</li>
+        <li><b>Inès</b> ajoute les Opportunités : LDG mobilité en vigueur (CGFP art. L. 413-2), CPF (art. L. 422-1), Plan de transformation DGAFP 2024.</li>
+        <li><b>Théo</b> note tout au tableau. <b>Léa</b> suit le temps et reformule si le groupe s'enlise : <em>"On a 3 items, il en manque un par cadrant — qui propose ?"</em></li>
+      </ul>
+      <div class="tip">Base RSU · Toute faiblesse doit renvoyer à un indicateur RSU mesurable (Décret n° 2020-1493 — 200 indicateurs, 10 chapitres). Un SWOT sans chiffre est une opinion, pas un diagnostic.</div>
+    </div>
+  </div>
+
+  <div class="acc">
+    <div class="achdr" onclick="this.parentElement.classList.toggle('open')">
+      <div class="anum">ÉTAPE 03</div><div class="atit">Plan d'action 3 axes — livrable 2</div><div class="adur">10 – 22 min</div><div class="aarr">›</div>
+    </div>
+    <div class="abody">
+      <ul>
+        <li>Le groupe négocie <b>3 axes prioritaires</b> : Attractivité & recrutement / Formation & développement / Anticipation des départs & transfert de savoirs.</li>
+        <li>Pour chaque axe : <b>une action principale</b>, un délai (≤ 1 an ou ≤ 3 ans), un pilote désigné, et le <b>lien LDG ou RSU obligatoire.</b></li>
+        <li><b>Inès</b> valide chaque axe : <em>Axe recrutement → CGFP art. L. 320-1 + LDG mobilité (art. L. 413-2). Axe formation → CGFP art. L. 422-1 (CPF). Axe retraites → CGFP art. L. 556-1 à L. 556-3.</em></li>
+        <li><b>Sylvie</b> cadre la faisabilité. Si l'axe formation ne prévoit aucune ressource, elle peut le bloquer : c'est joué.</li>
+        <li><b>Léa</b> chronomètre chaque axe. Si un axe dépasse 4 min sans accord, elle dit : <em>"Marc, tu arbitres ?"</em> — et Marc tranche.</li>
+      </ul>
+      <div class="tip">Référence LDG · Les LDG constituent la stratégie pluriannuelle RH (durée max. 5 ans, CGFP art. L. 413-3). Un bilan annuel est présenté au CSA (Décret n° 2019-1265).</div>
+    </div>
+  </div>
+
+  <div class="acc">
+    <div class="achdr" onclick="this.parentElement.classList.toggle('open')">
+      <div class="anum">ÉTAPE 04</div><div class="atit">Tableau de pilotage — livrable 3</div><div class="adur">22 – 28 min</div><div class="aarr">›</div>
+    </div>
+    <div class="abody">
+      <ul>
+        <li><b>Théo</b> présente ses 8 indicateurs. Le groupe évalue chacun : pertinence GPEEC, disponibilité RSU, mesurabilité trimestrielle.</li>
+        <li>Indicateurs proposés : <em>Taux de vacance / Solde entrées-sorties / % formations certifiantes / Taux CPF activé / Nb tuteurs senior / % fiches de poste actualisées / Taux mobilité interne / Délai moyen recrutement.</em></li>
+        <li>Pour chaque indicateur retenu : valeur N, cible à 3 ans, statut <b>RAG</b>, et action du plan associée.</li>
+        <li>Un indicateur sans action associée est <b>supprimé automatiquement</b> — règle imposée par Léa pour forcer la cohérence.</li>
+        <li>Si débat sur plus de 5 : vote à main levée. <b>Léa</b> organise le vote. Marc valide.</li>
+      </ul>
+      <div class="tip">RSU · Le décret n° 2020-1493 du 30 novembre 2020 structure le RSU en 200 indicateurs présentés annuellement au CSA. Le tableau de pilotage en est la déclinaison opérationnelle (CGFP art. L. 413-1).</div>
+    </div>
+  </div>
+
+  <div class="acc">
+    <div class="achdr" onclick="this.parentElement.classList.toggle('open')">
+      <div class="anum">ÉTAPE 05</div><div class="atit">Clôture & débriefing</div><div class="adur">28 – 30 min + 15 min</div><div class="aarr">›</div>
+    </div>
+    <div class="abody">
+      <p style="font-size:13px;color:var(--color-text-secondary);margin:10px 0 8px"><b>Léa clôture la réunion</b>, synthétise les 3 livrables produits et nomme les tensions observées. Ordre de prise de parole : Marc → Théo → Sylvie → Inès → Karim → Léa en dernier.</p>
+      <div class="dqs">
+        <div class="dq">Les 3 signaux d'alerte ont-ils tous été traduits en SWOT et en axes ? Lequel a été sous-traité ?</div>
+        <div class="dq">Le tableau de pilotage est-il cohérent avec le plan ? Y a-t-il des indicateurs sans action associée ?</div>
+        <div class="dq">Quel rôle a joué Léa ? Sa facilitation a-t-elle accéléré ou freiné le groupe ?</div>
+        <div class="dq">Quels leviers GPEEC ont été oubliés ? (CPF, tutorat, mobilité fonctionnelle…)</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="gbar"></div>
+
+<div class="slbl" style="margin-top:14px">05 · Références institutionnelles</div>
+<div class="shed">Boîte à outils juridique & méthodologique</div>
+
+<div class="rgrid">
+  <div class="rcard"><div class="rsrc">CGFP · Légifrance</div><h4>Art. L. 413-1 à L. 413-7</h4><p>Lignes Directrices de Gestion : stratégie pluriannuelle RH, mobilité, promotion, GPEEC. Ordonnance n° 2021-1574 du 24 novembre 2021.</p><a href="https://www.legifrance.gouv.fr/codes/section_lc/LEGITEXT000044416551/LEGISCTA000044422182/" target="_blank">→ Légifrance</a></div>
+  <div class="rcard"><div class="rsrc">Loi · 6 août 2019</div><h4>Loi n° 2019-828 — Transformation FP</h4><p>Art. 5 : instaure le RSU. Art. 30 : crée les LDG dans les 3 versants. LDG mobilité en vigueur au 1er janvier 2020.</p><a href="https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000038889182" target="_blank">→ Légifrance</a></div>
+  <div class="rcard"><div class="rsrc">Décret · 29 nov. 2019</div><h4>Décret n° 2019-1265 — LDG</h4><p>LDG établies par le ministre, transmises à la DGAFP pour accord, soumises au CSA. Durée max. 5 ans. Bilan annuel au CSA.</p><a href="https://www.legifrance.gouv.fr/loda/id/JORFTEXT000039434533/" target="_blank">→ Légifrance</a></div>
+  <div class="rcard"><div class="rsrc">Décret · 30 nov. 2020</div><h4>Décret n° 2020-1493 — RSU</h4><p>200 indicateurs en 10 chapitres : emploi, recrutement, parcours, formation, rémunérations, santé/sécurité, temps de travail, action sociale, dialogue social, discipline.</p><a href="https://www.legifrance.gouv.fr/loda/id/JORFTEXT000042570514" target="_blank">→ Légifrance</a></div>
+  <div class="rcard"><div class="rsrc">CGFP · Art. L. 422-1</div><h4>Compte Personnel de Formation</h4><p>CPF dans la FPE : droit individuel à la formation utilisable à l'initiative de l'agent. Levier GPEEC pour transitions professionnelles.</p><a href="https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000044429803" target="_blank">→ Légifrance</a></div>
+  <div class="rcard"><div class="rsrc">DGAFP · Guide pratique</div><h4>Guide GPRH 2016</h4><p>Cadre méthodologique DGAFP : projection effectifs à 1 et 3 ans, cartographie des métiers, scénarios de renouvellement des compétences.</p><a href="https://www.fonction-publique.gouv.fr/files/files/publications/publications-dgafp/gprh-guides-pratiques-2016.pdf" target="_blank">→ DGAFP</a></div>
+</div>
+
+<div class="gbar"></div>
+
+<div class="slbl" style="margin-top:14px">06 · Rôles</div>
+<div class="shed">Distribution des personnages</div>
+
+<div class="czone">
+  <div id="cc"><div class="ph">Appuyez sur le bouton pour distribuer le premier rôle</div></div>
+  <div class="btnrow">
+    <button id="bn" onclick="nextCard()">Distribuer le premier rôle ↗</button>
+    <button onclick="resetCards()"><i class="ti ti-refresh" aria-hidden="true"></i> Nouveau tirage</button>
+  </div>
+  <div class="ctrx" id="ct"></div>
+</div>
+
+<div class="foot">Formation GPEEC & RH · IRA de Bastia · Formatrice : Gaëlle Fontana · fonction-publique.gouv.fr</div>
+
+<script>
+const R=[
+  {
+    col:'#b8902a',bt:'N+1 · Animateur',bs:'background:#f5e9c8;color:#6b4a10;border:0.5px solid #d4a83a',
+    nom:'Marc',titre:'Directeur des Ressources Humaines',poste:'1er janvier 2021',
+    svc:'Direction des Ressources Humaines — Direction régionale',
+    comps:['Management d\'équipe et animation de réunion sous contrainte de temps','Vision stratégique RH et connaissance du cadre CGFP','Arbitrage en situation de tension et de désaccord','Communication institutionnelle vers le Directeur régional'],
+    role:'Vous animez la réunion. Vous portez la responsabilité des 3 livrables. Vous avez 30 minutes, une équipe divisée, et Léa à vos côtés pour vous aider à maintenir le cap. Vous êtes le décideur : en cas de blocage, c\'est vous qui tranchez.',
+    tens:'Vous avez tendance à trop consulter avant de décider. Léa devra parfois vous relancer : "Marc, on a besoin de ton arbitrage." Acceptez-le sans vous justifier longuement — l\'arbitrage sec est aussi managérial.',
+    cons:'Ouvrez en 90 secondes. Lancez le SWOT avec Karim. Arbitrez le plan d\'action axe par axe. Validez le tableau de pilotage avec Théo. Appuyez-vous sur Léa pour le temps et les synthèses.',
+    livs:['SWOT · animation','PLAN · arbitrage','PILOTAGE · validation'],
+    punch:'"On a 30 minutes et 3 livrables à rendre au Directeur régional. Léa, tu gères le temps — c\'est parti."'
+  },
+  {
+    col:'#2878b8',bt:'Chargée de mission GPEEC',bs:'background:#e6f1fb;color:#0c447c;border:0.5px solid #85b7eb',
+    nom:'Karim',titre:'Chargé de mission GPEEC — Analyste RH senior',poste:'1er septembre 2022',
+    svc:'Bureau de la gestion prévisionnelle (DRH régionale)',
+    comps:['Analyse de données RH et pyramide des âges (5 000 agents)','Connaissance des LDG (CGFP art. L. 413-1 à L. 413-7)','Rédaction de plans d\'action GPEEC et scénarios prévisionnels','Maîtrise du RSU et de la base de données sociales'],
+    role:'Vous êtes le moteur analytique. Vous maîtrisez les trois chiffres clés : 11 % de vacance, 27 % de départs d\'ici 2029, 1,8 % de formation. Vous voulez aller vite et clôturer le SWOT en 5 minutes.',
+    tens:'Vous coupez la parole à Sylvie quand elle soulève des contraintes. Vous dites : "Les chiffres parlent d\'eux-mêmes." Léa devra vous recadrer une fois : "Karim, laisse Sylvie finir." Acceptez-le.',
+    cons:'Apportez les données RSU dès l\'ouverture. Alimentez le SWOT avec des chiffres précis. Défendez l\'axe "Attractivité et recrutement" dans le plan (CGFP art. L. 320-1). Acceptez d\'être ralenti par Sylvie : c\'est réaliste.',
+    livs:['SWOT · données RSU','PLAN · axe recrutement'],
+    punch:'"11 % de vacance, 27 % de départs. Les chiffres parlent — le plan ne peut plus attendre."'
+  },
+  {
+    col:'#b85a2a',bt:'Responsable Formation',bs:'background:#faece7;color:#712b13;border:0.5px solid #f0997b',
+    nom:'Sylvie',titre:'Responsable du Bureau de la Formation Continue',poste:'14 mars 2018',
+    svc:'Bureau de la formation continue (DRH régionale)',
+    comps:['Ingénierie de formation et plan annuel (5 000 agents, 1,5 ETP)','CPF et formations certifiantes (CGFP art. L. 422-1)','Gestion budgétaire et contraintes de ressources','Accompagnement des parcours et transitions professionnelles'],
+    role:'Vous gérez le plan de formation pour 5 000 agents avec 1,5 ETP et un budget contraint. Promettre une montée en formation sans moyens est irresponsable. Les 1,8 % ne sont pas un choix : c\'est une contrainte structurelle.',
+    tens:'Vous bloquez sur l\'axe "Formation" si aucune ressource n\'est engagée. Vous pouvez dire : "Je ne peux pas piloter ça sans ETP ou budget dédié." Marc doit gérer. Léa peut vous demander de formuler une contre-proposition plutôt qu\'un refus.',
+    cons:'Dans le SWOT : signalez que 1,8 % est à la fois une Faiblesse interne ET une Menace externe. Exigez un indicateur formation dans le tableau de pilotage (taux CPF activé). Acceptez un compromis si Marc engage une solution mesurable.',
+    livs:['SWOT · faisabilité','PLAN · axe formation','PILOTAGE · indicateur formation'],
+    punch:'"Un plan formation sans budget sur 5 000 agents, c\'est une liste de vœux, pas une GPEEC."'
+  },
+  {
+    col:'#2a8a4a',bt:'Juriste RH · Référente LDG',bs:'background:#eaf3de;color:#27500a;border:0.5px solid #97c459',
+    nom:'Inès',titre:'Juriste RH — Référente Lignes Directrices de Gestion',poste:'3 juin 2020',
+    svc:'Bureau du droit statutaire (DRH régionale)',
+    comps:['Droit de la fonction publique (CGFP, statuts particuliers)','LDG mobilité et promotion (Décret n° 2019-1265 du 29 nov. 2019)','RSU et conformité réglementaire (Décret n° 2020-1493)','Contentieux RH et recours devant les Tribunaux Administratifs'],
+    role:'Vous êtes la gardienne de la conformité juridique. Chaque action du plan doit avoir une base légale. Vous n\'êtes pas un frein : vous êtes une protection contre les décisions inopposables ou contentieuses.',
+    tens:'Karim vous perçoit comme ralentissante. Tenez bon — mais soyez concise : citez la référence en 10 secondes, pas en 3 minutes. Léa peut vous demander : "Inès, en une ligne ?"',
+    cons:'Citez au moins 2 références légales dans le plan :\n• Axe recrutement → CGFP art. L. 320-1 + LDG mobilité (art. L. 413-2)\n• Axe formation → CGFP art. L. 422-1 (CPF)\n• Axe retraites → CGFP art. L. 556-1 à L. 556-3\nVérifiez que le tableau de pilotage renvoie aux indicateurs RSU (Décret n° 2020-1493).',
+    livs:['SWOT · opportunités LDG','PLAN · bases légales','PILOTAGE · conformité RSU'],
+    punch:'"Sans base légale, ce n\'est pas un plan d\'action. C\'est un document sans valeur opposable."'
+  },
+  {
+    col:'#7a4ab8',bt:'Analyste RH Junior',bs:'background:#eeedfe;color:#3c3489;border:0.5px solid #afa9ec',
+    nom:'Théo',titre:'Analyste RH — Chargé de mission données sociales',poste:'2 novembre 2023',
+    svc:'Bureau de la gestion prévisionnelle (DRH régionale)',
+    comps:['Traitement de données et visualisation (Excel, Power BI)','SIRH et base de données sociales RSU (Décret 2020-1493)','Statistiques RH et tableaux de bord de pilotage','Rédaction et mise en forme des livrables collectifs'],
+    role:'Vous êtes arrivé récemment. Vous maîtrisez les outils et les données, mais manquez encore de recul institutionnel. Vous assurez le secrétariat de séance et avez préparé 8 indicateurs pour le tableau de pilotage — vous y tenez tous.',
+    tens:'Votre liste de 8 est trop longue. Le groupe doit la réduire à 5. Défendez vos 3 préférés si on veut les supprimer — cédez si l\'argument est solide (indicateur non disponible dans le RSU ou non mesurable mensuellement).',
+    cons:'Notez les 3 livrables au fil de la réunion. Proposez vos 8 indicateurs à 22 min : Taux de vacance / Solde entrées-sorties / % formations certifiantes / Taux CPF activé / Nb tuteurs senior / % fiches de poste actualisées / Taux mobilité interne / Délai moyen recrutement. Léa organise le vote à 5.',
+    livs:['PILOTAGE · proposition + réduction','SWOT · secrétariat','PLAN · mise en forme'],
+    punch:'"J\'ai les 8 indicateurs RSU prêts. La question c\'est lesquels on retient vraiment."'
+  },
+  {
+    col:'#1a7a7a',bt:'Facilitatrice · Rôle clé',bs:'background:#e1f5ee;color:#085041;border:0.5px solid #5dcaa5',
+    nom:'Léa',titre:'Facilitatrice de la réunion GPEEC',poste:'1er mars 2019',
+    svc:'Mission qualité RH et conduite du changement (DRH régionale)',
+    comps:['Facilitation de réunion et gestion des dynamiques de groupe','Reformulation, synthèse et gestion du temps','Connaissance des outils GPEEC (SWOT, tableau de pilotage)','Animation neutre : pas de prise de position sur le fond'],
+    role:'Vous n\'avez pas d\'avis sur le contenu des livrables. Votre mission est d\'aider le groupe à produire. Vous gérez le chrono, reformulez en cas de blocage, relancez les silences, organisez les votes, et clôturez la réunion. Vous êtes la garante du processus, pas du résultat.',
+    tens:'Vous ne devez jamais imposer un contenu. Si vous avez un avis, vous le taisez. Votre seule arme : la question. "On est bloqués sur quoi exactement ?" "Marc, tu arbitres ?" "Quel est le vrai désaccord ici ?" Résistez à l\'envie de trancher à la place du groupe.',
+    cons:'Annoncez les règles du jeu au début (30 min, 3 livrables, 1 décideur = Marc). Chrono : signalez à 10 min (fin SWOT), 22 min (fin plan), 28 min (fin pilotage). Intervenez si un échange dépasse 3 min sans avancer. Clôturez en 2 min : "Voici ce qu\'on a produit — SWOT, plan d\'action, tableau de pilotage." Au débriefing : parlez en dernier, nommez les tensions observées.',
+    livs:['Facilitatrice · processus et chrono','PILOTAGE · vote à 5 indicateurs','CLÔTURE · synthèse des 3 livrables'],
+    punch:'"Je ne décide rien, je fais en sorte que vous puissiez tout décider en 30 minutes."'
+  }
+];
+
+let order=[];let idx=-1;
+function shuffle(a){let b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;}
+function resetCards(){order=shuffle([...Array(R.length).keys()]);idx=-1;document.getElementById('cc').innerHTML='<div class="ph">Appuyez sur le bouton pour distribuer le premier rôle</div>';document.getElementById('bn').textContent='Distribuer le premier rôle ↗';document.getElementById('bn').disabled=false;document.getElementById('ct').textContent='';}
+function nextCard(){if(idx>=R.length-1)return;idx++;const r=R[order[idx]];renderCard(r);const rem=R.length-idx-1;document.getElementById('ct').textContent=`Rôle ${idx+1} / ${R.length}${rem>0?' · '+rem+' restant'+(rem>1?'s':''):' · Tous les rôles distribués'}`;if(idx>=R.length-1){document.getElementById('bn').disabled=true;document.getElementById('bn').textContent='Tous les rôles distribués';}else{document.getElementById('bn').textContent='Distribuer le rôle suivant ↗';}}
+function renderCard(r){
+const lv=r.livs.map(l=>`<span class="ltag">${l}</span>`).join('');
+const co=r.comps.map(c=>`<li>${c}</li>`).join('');
+const cn=r.cons.replace(/\n/g,'<br>');
+document.getElementById('cc').innerHTML=`<div class="rolecard">
+  <div class="rcbar" style="background:${r.col}"></div>
+  <div class="rchdr">
+    <span class="rcbadge" style="${r.bs}">${r.bt}</span>
+    <div class="rcnom">${r.nom}</div>
+    <div class="rctit">${r.titre}</div>
+    <div class="rcmeta">
+      <div class="rcchip">Prise de poste : <span>${r.poste}</span></div>
+      <div class="rcchip">Service : <span>${r.svc}</span></div>
+    </div>
+  </div>
+  <div class="rcbody">
+    <div class="rclbl">Rôle dans la simulation</div><p>${r.role}</p>
+    <div class="rclbl">Compétences clés</div><ul>${co}</ul>
+    <div class="rclbl">Tension à jouer</div><div class="tens">${r.tens}</div>
+    <div class="rclbl">Consigne de jeu</div><div class="cons"><p>${cn}</p><div style="margin-top:8px">${lv}</div></div>
+    <div class="rclbl">Punchline d'ouverture</div><p class="punch">${r.punch}</p>
+  </div>
+  <div class="rcfoot">Formation GPEEC & RH · IRA de Bastia · Formatrice : Gaëlle Fontana</div>
+</div>`;}
+resetCards();
+</script>
